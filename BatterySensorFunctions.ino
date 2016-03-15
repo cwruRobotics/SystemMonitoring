@@ -77,6 +77,26 @@ void loop() {
   Serial.print("Power percentage left: ");
   Serial.print(percentsLeft * 100);//print power percentage left
   Serial.println("%");
+  
+  //Hard-coded values that need to be changed to the data that will be coming in
+  byte volt = currentVoltage;
+  byte cur = currentCurrent;
+  
+ File dataFile = SD.open("datalog.txt", FILE_WRITE);// Opening a file on the SD card to store the values 
+ 
+    // printing the data to the SD card 
+    if (dataFile) {
+    dataFile.print(dataString1);
+    dataFile.println(volt);
+    dataFile.print(dataString2);
+    dataFile.println(cur);
+    dataFile.close();
+  }
+  
+  else {
+    Serial.println("error opening datalog.txt"); //print an error message if no data file can be opened 
+  }
+  
   delay(1000);
   
 }
@@ -94,25 +114,6 @@ double convertToCurrents(int x){
 double maximumVoltageA1 (double r1, double r2){
   return ((14 - (r1 / (r1 +r2)) * 14) / 5.0) * voltage_1_Maximum;//calculate the maximum voltage of the battery based on r1 and r2
   
-  {
-  //Hard-coded values that need to be changed to the data that will be coming in
-  byte volt = 5;
-  byte cur = 3;
-  
- File dataFile = SD.open("datalog.txt", FILE_WRITE);// Opening a file on the SD card to store the values 
- 
-    // printing the data to the SD card 
-    if (dataFile) {
-    dataFile.print(dataString1);
-    dataFile.println(volt);
-    dataFile.print(dataString2);
-    dataFile.println(cur);
-    dataFile.close();
-  }
-  
-  else {
-    Serial.println("error opening datalog.txt"); //print an error message if no data file can be opened 
-  }
-}
+
 }
 
