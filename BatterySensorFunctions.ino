@@ -5,8 +5,25 @@
  *    -Reading 
  *
  */
-
-
+#include <SD.h>
+const int chipSelect = 4;
+void setup()
+{
+  // Open serial communications and wait for port to open:
+  Serial.begin(9600);
+  while (!Serial) {
+    ;
+  }
+  // Check to see if the SD card is present, otherwise display error message
+  Serial.print("Initializing SD card...");
+  pinMode(10, OUTPUT);
+  if (!SD.begin(chipSelect)) {
+    Serial.println("Card failed, or not present");
+    return;
+  }
+  Serial.println("card initialized.");
+}
+//begin taking data
 const int csensor1 = A0;
 const int vsensor1 = A1;
 const int voltage_1_Zero = 0;
